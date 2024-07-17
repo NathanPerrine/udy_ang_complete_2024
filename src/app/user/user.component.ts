@@ -1,5 +1,17 @@
 import { Component, computed, EventEmitter, Input, input, Output, output } from '@angular/core';
 
+// type User = {
+//   id: string,
+//   name: string,
+//   avatar: string,
+// }
+
+interface User {
+  id: string,
+  name: string,
+  avatar: string,
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -8,13 +20,7 @@ import { Component, computed, EventEmitter, Input, input, Output, output } from 
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  // @Input - older style, more common, less efficient
-  // x = input - newer signals, more efficient, less common
-  @Input({required: true}) id!: string;
-  // @Input({required: true}) avatar!: string;
-  // @Input({required: true}) name!: string;
-  avatar = input.required<string>();
-  name = input.required<string>();
+  @Input({required: true}) user!: User;
 
 
   // older, more common output style
@@ -24,10 +30,10 @@ export class UserComponent {
 
 
   imagePath = computed(() => {
-    return 'assets/images/users/' + this.avatar();
+    return 'assets/images/users/' + this.user.avatar;
   });
 
   onSelectUser() {
-    this.select.emit(this.id)
+    this.select.emit(this.user.id)
   }
 }
